@@ -5,5 +5,5 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  reporters: ["./dist/index.cjs"],
+  reporters: ["./dist/index.js"],
 };

@@ -1,11 +1,20 @@
 {
   "name": "jest-console-group-reporter",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "private": true,
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "license": "MIT",
-  "author": "Ashvin-Pal",
-  "type": "module",
+  "author": "ashvin-Pal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ashvin-Pal/jest-console-group-reporter"
+  },
+  "keywords": [
+    "jest",
+    "reporter",
+    "console",
+    "group"
+  ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
