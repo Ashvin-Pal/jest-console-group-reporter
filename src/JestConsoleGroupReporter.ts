@@ -8,7 +8,7 @@ import {
   type TestContext,
 } from "@jest/reporters";
 import { buildConsoleMessages, buildFilteredMessage, buildHeader } from "@/messageBuilders";
-import { mergeConsoleMaps } from "./mergeConsoleMaps";
+import { mergeConsoleMaps } from "@/mergeConsoleMaps";
 import type { DisplayOptions, ConsoleMessagesMap, Options } from "@/types";
 import { processConsoleMessages } from "./processConsoleMessages";
 import { initializeOptions } from "./initializeOptions";

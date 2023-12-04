@@ -22,7 +22,8 @@
       "@/logEntry": ["./logEntry"],
       "@/types": ["./types"],
       "@/messageBuilders": ["./messageBuilders"],
-      "@/style": ["./style"]
+      "@/style": ["./style"],
+      "@/mergeConsoleMaps": ["./mergeConsoleMaps"]
     }
   },
   "include": ["src/**/*"],

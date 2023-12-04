@@ -1,11 +1,15 @@
 import type { ConsoleMessagesMap } from "@/types";
 import { mergeLogEntries } from "@/logEntry";
+import { cloneConsoleMessagesMap } from "./cloneConsoleMessagesMap";
 
+/**
+ * Merges two ConsoleMessagesMap together without mutating the original maps.
+ */
 export function mergeConsoleMaps(
   aggregatedConsoleMessages: ConsoleMessagesMap,
   consoleMessagesMap: ConsoleMessagesMap
 ): ConsoleMessagesMap {
-  const mergedMap: ConsoleMessagesMap = new Map(aggregatedConsoleMessages);
+  const mergedMap: ConsoleMessagesMap = cloneConsoleMessagesMap(aggregatedConsoleMessages);
   const currentConsoleMapKeys = consoleMessagesMap.keys();
 
   for (const consoleType of currentConsoleMapKeys) {
