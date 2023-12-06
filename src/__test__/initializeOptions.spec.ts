@@ -17,6 +17,7 @@ describe("initializeOptions", () => {
       enabled: true,
       filePaths: true,
     },
+    useGitHubActions: false,
   };
 
   test("Should use default options when no custom options are provided", () => {
@@ -31,6 +32,7 @@ describe("initializeOptions", () => {
         enabled: false,
       },
       afterAllTests: {},
+      useGitHubActions: true,
     };
 
     const expected = {
@@ -43,6 +45,7 @@ describe("initializeOptions", () => {
       afterAllTests: {
         ...defaultOptions.afterAllTests,
       },
+      useGitHubActions: true,
     };
     const options = initializeOptions(customOptions);
     expect(options).toEqual(expected);
