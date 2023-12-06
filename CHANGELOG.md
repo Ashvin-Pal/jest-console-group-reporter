@@ -1,5 +1,15 @@
 # jest-console-group-reporter
 
+## 0.12.1
+
+### Patch Changes
+
+- c940c52: Improve mapping performance performance. Removed redundant map operations.
+
+  perf: improve processConsoleMessages performance
+
+  perf: improve mergeConsoleMaps performance
+
 ## 0.12.0
 
 ### Minor Changes
