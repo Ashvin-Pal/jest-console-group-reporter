@@ -15,6 +15,7 @@ interface InitialReporterOptions {
     reportType?: Options["afterAllTests"]["reportType"];
     filePaths?: boolean;
   };
+  useGitHubActions?: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ export function initializeOptions(initialOptions: InitialReporterOptions = {}): 
       enabled: true,
       filePaths: true,
     },
+    useGitHubActions: false,
   };
 
   validateFilters(initialOptions.filters);

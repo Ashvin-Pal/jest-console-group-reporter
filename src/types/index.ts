@@ -32,6 +32,7 @@ export interface Options {
   consoleLevels: ConsoleTypes[];
   afterEachTest: DisplayOptions;
   afterAllTests: DisplayOptions;
+  useGitHubActions: boolean;
 }
 
 export type ColorTypes = ConsoleTypes | "stackTrace" | "number" | "default" | "filter";

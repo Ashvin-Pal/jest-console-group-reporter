@@ -15,9 +15,11 @@ export const buildConsoleMessages = ({
   consoleLevels,
   consoleMap,
   displayOptions,
+  useGitHubActions,
 }: {
   consoleMap: ConsoleMessagesMap;
   consoleLevels: Options["consoleLevels"];
+  useGitHubActions: Options["useGitHubActions"];
   displayOptions: DisplayOptions;
 }): string[] => {
   if (consoleMap.size === 0) {
@@ -29,7 +31,7 @@ export const buildConsoleMessages = ({
     if (consoleType) {
       const consoleTypeEntries = Array.from(consoleType.entries()).sort(orderByCount);
       const consoleMessage = consoleTypeEntries.map(([message, logEntry]) =>
-        buildConsoleMessage({ message, type, ...logEntry, displayOptions })
+        buildConsoleMessage({ message, type, ...logEntry, displayOptions, useGitHubActions })
       );
       acc.push(...consoleMessage);
     }
