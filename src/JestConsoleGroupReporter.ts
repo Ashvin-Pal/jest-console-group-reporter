@@ -46,7 +46,7 @@ export class JestConsoleGroupReporter extends DefaultReporter {
   ): void {
     this.handleReporting({
       consoleMessagesMap: this.aggregatedConsoleMessagesMap,
-      filtertedCount: this.filteredMessageCount,
+      filteredCount: this.filteredMessageCount,
       displayOption: this._options.afterAllTests,
     });
     super.onRunComplete();
@@ -58,32 +58,32 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     config: Config.ProjectConfig,
     testResult: TestResult
   ): void {
-    const { consoleMessagesMap, filtertedCount } = this.processTestResult(config, testResult);
+    const { consoleMessagesMap, filteredCount } = this.processTestResult(config, testResult);
     this.storeConsoleMesages(consoleMessagesMap);
-    this.storeFilteredCount(filtertedCount);
+    this.storeFilteredCount(filteredCount);
     super.printTestFileHeader(testPath, config, this.stripConsoleMessagesFromResults(testResult));
     this.handleReporting({
       consoleMessagesMap,
-      filtertedCount,
+      filteredCount,
       displayOption: this._options.afterEachTest,
     });
   }
 
   handleReporting({
     consoleMessagesMap,
-    filtertedCount,
+    filteredCount,
     displayOption,
   }: {
     consoleMessagesMap: ConsoleMessagesMap;
-    filtertedCount: number;
+    filteredCount: number;
     displayOption: DisplayOptions;
   }): void {
-    const shouldDisplay = displayOption.enabled && (consoleMessagesMap.size || filtertedCount);
+    const shouldDisplay = displayOption.enabled && (consoleMessagesMap.size || filteredCount);
 
     if (shouldDisplay) {
       this.displayReportHeader();
       this.displayLogReport(consoleMessagesMap, displayOption);
-      this.displayFilteredCount(filtertedCount);
+      this.displayFilteredCount(filteredCount);
       this.insertTestSeparator();
     }
   }
@@ -128,7 +128,7 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     testResult: TestResult
   ): {
     consoleMessagesMap: ConsoleMessagesMap;
-    filtertedCount: number;
+    filteredCount: number;
   } {
     return processConsoleMessages({ ...testResult, ...this._options, config });
   }

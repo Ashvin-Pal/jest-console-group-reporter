@@ -10,24 +10,19 @@ export function mergeConsoleMaps(
   consoleMessagesMap: ConsoleMessagesMap
 ): ConsoleMessagesMap {
   const mergedMap: ConsoleMessagesMap = cloneConsoleMessagesMap(aggregatedConsoleMessages);
-  const currentConsoleMapKeys = consoleMessagesMap.keys();
-
-  for (const consoleType of currentConsoleMapKeys) {
-    if (!mergedMap.has(consoleType)) {
-      mergedMap.set(consoleType, new Map());
-    }
-  }
 
   for (const [consoleType, consoleTypeMap] of consoleMessagesMap.entries()) {
-    const currentConsoleType = mergedMap.get(consoleType);
+    let currentConsoleType = mergedMap.get(consoleType);
+
+    // Initialize the map for this consoleType if it doesn't exist
+    if (!currentConsoleType) {
+      currentConsoleType = new Map();
+      mergedMap.set(consoleType, currentConsoleType);
+    }
 
     for (const [key, value] of consoleTypeMap.entries()) {
-      const existingObject = currentConsoleType?.get(key);
-      if (existingObject) {
-        currentConsoleType?.set(key, mergeLogEntries(existingObject, value));
-        continue;
-      }
-      currentConsoleType?.set(key, { ...value });
+      const existingObject = currentConsoleType.get(key);
+      currentConsoleType.set(key, existingObject ? mergeLogEntries(existingObject, value) : value);
     }
   }
 
