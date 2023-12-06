@@ -1,5 +1,5 @@
 import type { TestResult, Config } from "@jest/reporters";
-import type { ConsoleMessagesMap, LogEntry, LogsEntryMap, Options } from "@/types";
+import type { ConsoleMessagesMap, LogsEntryMap, Options } from "@/types";
 import { getGroupName } from "./getGroupName";
 import { shouldFilterMessage } from "./shouldFilterMessage";
 import { mergeLogEntries, createLogEntry } from "@/logEntry";
@@ -18,34 +18,29 @@ export function processConsoleMessages({
   config,
 }: ProcessConsoleMessagesOptions): {
   consoleMessagesMap: ConsoleMessagesMap;
-  filtertedCount: number;
+  filteredCount: number;
 } {
   const consoleMessagesMap: ConsoleMessagesMap = new Map();
-  let filtertedCount = 0;
+  let filteredCount = 0;
 
   for (const consoleMessage of consoleMessages) {
     if (shouldFilterMessage(filters, consoleMessage)) {
-      filtertedCount += 1;
+      filteredCount += 1;
       continue;
     }
 
     const { groupName, isCustomGroup } = getGroupName(consoleMessage, groups);
 
-    if (!consoleMessagesMap.has(consoleMessage.type)) {
-      consoleMessagesMap.set(consoleMessage.type, new Map());
+    const logEntryMap: LogsEntryMap = consoleMessagesMap.get(consoleMessage.type) ?? new Map();
+    if (!logEntryMap) {
+      consoleMessagesMap.set(consoleMessage.type, logEntryMap);
     }
 
-    const consoleTypeMap = consoleMessagesMap.get(consoleMessage.type) as LogsEntryMap;
     const logEntry = createLogEntry({ isCustomGroup, testFilePath, ...consoleMessage, config });
 
-    if (!consoleTypeMap.has(groupName)) {
-      consoleTypeMap.set(groupName, { ...logEntry });
-      continue;
-    }
-
-    const consoleTypeKey = consoleTypeMap.get(groupName) as LogEntry;
-    consoleTypeMap.set(groupName, mergeLogEntries(consoleTypeKey, logEntry));
+    const existingEntry = logEntryMap.get(groupName);
+    logEntryMap.set(groupName, existingEntry ? mergeLogEntries(existingEntry, logEntry) : logEntry);
   }
 
-  return { consoleMessagesMap, filtertedCount };
+  return { consoleMessagesMap, filteredCount };
 }
