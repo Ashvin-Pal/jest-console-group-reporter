@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 0.13.0
+
+### Minor Changes
+
+- acb3eb7: Allow dynamic group names.
+
 ## 0.12.1
 
 ### Patch Changes
