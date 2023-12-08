@@ -1,4 +1,4 @@
-import type { ConsoleMessage, Options } from "./types";
+import type { ConsoleMessage, Matcher, Options } from "./types";
 
 interface GroupName {
   /**
@@ -15,22 +15,31 @@ interface GroupName {
   isCustomGroup: boolean;
 }
 
-export function getGroupName(
-  { message, type, origin }: ConsoleMessage,
-  groups: Options["groups"]
-): GroupName {
+const isMatch = (consoleMessage: ConsoleMessage, match: Matcher): boolean => {
+  if (typeof match === "string") {
+    return consoleMessage.message === match;
+  }
+
+  if (match instanceof RegExp) {
+    return match.test(consoleMessage.message);
+  }
+
+  if (typeof match === "function") {
+    return match(consoleMessage);
+  }
+  return false;
+};
+
+/**
+ * Gets the group name for a given console message based on the defined groups.
+ */
+export function getGroupName(consoleMessage: ConsoleMessage, groups: Options["groups"]): GroupName {
   for (const { match, name } of groups) {
-    if (typeof match === "string" && message === match) {
-      return { groupName: name, isCustomGroup: true };
-    }
-
-    if (match instanceof RegExp && match.test(message)) {
-      return { groupName: name, isCustomGroup: true };
-    }
-
-    if (typeof match === "function" && match({ type, message, origin })) {
-      return { groupName: name, isCustomGroup: true };
+    if (isMatch(consoleMessage, match)) {
+      const groupName = typeof name === "function" ? name(consoleMessage) : name;
+      return { groupName, isCustomGroup: true };
     }
   }
-  return { groupName: message, isCustomGroup: false };
+
+  return { groupName: consoleMessage.message, isCustomGroup: false };
 }

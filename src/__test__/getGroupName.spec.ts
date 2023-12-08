@@ -6,6 +6,7 @@ const warnConsoleMessage = { message: "warn", type: "warn", origin: "warn" };
 const errorTypePredicateFn = ({ type }: ConsoleMessage): boolean => type === "error";
 const messageTypePredicateFn = ({ message }: ConsoleMessage): boolean => /^error/.test(message);
 const originTypePredicateFn = ({ origin }: ConsoleMessage): boolean => /^console/.test(origin);
+const dynamicNameFunction = (msg: ConsoleMessage): string => `Dynamic - ${msg.type}`;
 
 describe("getGroupName", () => {
   test.each`
@@ -47,6 +48,20 @@ describe("getGroupName", () => {
     ({ groups, consoleMessage, expectedOutput }) => {
       const { groupName, isCustomGroup } = getGroupName(consoleMessage, groups);
       expect(groupName).toBe(expectedOutput.name);
+      expect(isCustomGroup).toBe(expectedOutput.isCustomGroup);
+    }
+  );
+
+  test.each`
+    groups                                                          | consoleMessage         | expectedOutput
+    ${[{ match: "error", name: dynamicNameFunction }]}              | ${errorConsoleMessage} | ${{ groupName: "Dynamic - error", isCustomGroup: true }}
+    ${[{ match: /warn/, name: dynamicNameFunction }]}               | ${warnConsoleMessage}  | ${{ groupName: "Dynamic - warn", isCustomGroup: true }}
+    ${[{ match: errorTypePredicateFn, name: dynamicNameFunction }]} | ${errorConsoleMessage} | ${{ groupName: "Dynamic - error", isCustomGroup: true }}
+  `(
+    "Groups messages correctly with dynamic naming",
+    ({ groups, consoleMessage, expectedOutput }) => {
+      const { groupName, isCustomGroup } = getGroupName(consoleMessage, groups);
+      expect(groupName).toBe(expectedOutput.groupName);
       expect(isCustomGroup).toBe(expectedOutput.isCustomGroup);
     }
   );

@@ -1,5 +1,5 @@
 import type { TestResult, Config } from "@jest/reporters";
-import type { ConsoleMessagesMap, LogsEntryMap, Options } from "@/types";
+import type { ConsoleMessagesMap, Options } from "@/types";
 import { getGroupName } from "./getGroupName";
 import { shouldFilterMessage } from "./shouldFilterMessage";
 import { mergeLogEntries, createLogEntry } from "@/logEntry";
@@ -31,8 +31,9 @@ export function processConsoleMessages({
 
     const { groupName, isCustomGroup } = getGroupName(consoleMessage, groups);
 
-    const logEntryMap: LogsEntryMap = consoleMessagesMap.get(consoleMessage.type) ?? new Map();
+    let logEntryMap = consoleMessagesMap.get(consoleMessage.type);
     if (!logEntryMap) {
+      logEntryMap = new Map();
       consoleMessagesMap.set(consoleMessage.type, logEntryMap);
     }
 
