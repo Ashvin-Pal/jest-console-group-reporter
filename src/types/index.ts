@@ -28,7 +28,7 @@ export interface DisplayOptions {
 
 export interface Options {
   filters: Array<Matcher>;
-  groups: Array<{ match: Matcher; name: string }>;
+  groups: Array<{ match: Matcher; name: string | ((arg: ConsoleMessage) => string) }>;
   consoleLevels: ConsoleTypes[];
   afterEachTest: DisplayOptions;
   afterAllTests: DisplayOptions;

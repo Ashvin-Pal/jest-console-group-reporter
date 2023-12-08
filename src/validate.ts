@@ -12,8 +12,8 @@ export function validateGroups(groups: Options["groups"] | undefined): void {
   }
 
   groups.forEach(({ name, match }, index) => {
-    if (typeof name !== "string") {
-      throw new Error(`Invalid name property at index ${index}: Expected a string.`);
+    if (!(typeof name === "string" || typeof name === "function")) {
+      throw new Error(`Invalid name property at index ${index}: Expected a string or function.`);
     }
 
     if (!isValidMatchType(match)) {

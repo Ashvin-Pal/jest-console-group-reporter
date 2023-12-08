@@ -1,5 +1,5 @@
 import { initializeOptions } from "../initializeOptions";
-import type { Options } from "@/types";
+import type { ConsoleMessage, Options } from "@/types";
 
 describe("initializeOptions", () => {
   // Default options for reference
@@ -83,14 +83,16 @@ describe("initializeOptions", () => {
   );
 
   test.each`
-    groups                                          | errorMessage
-    ${""}                                           | ${"The groups option must be an array."}
-    ${{}}                                           | ${"The groups option must be an array."}
-    ${["not an object"]}                            | ${"Invalid name property at index 0: Expected a string."}
-    ${[{ match: /Something/ }]}                     | ${"Invalid name property at index 0: Expected a string."}
-    ${[{ name: undefined, match: /Something/ }]}    | ${"Invalid name property at index 0: Expected a string."}
-    ${[{ name: "React errors", match: undefined }]} | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
-    ${[{ name: "React errors", match: null }]}      | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
+    groups                                                                              | errorMessage
+    ${""}                                                                               | ${"The groups option must be an array."}
+    ${{}}                                                                               | ${"The groups option must be an array."}
+    ${["not an object"]}                                                                | ${"Invalid name property at index 0: Expected a string or function."}
+    ${[{ match: /Something/ }]}                                                         | ${"Invalid name property at index 0: Expected a string or function."}
+    ${[{ name: undefined, match: /Something/ }]}                                        | ${"Invalid name property at index 0: Expected a string or function."}
+    ${[{ name: {}, match: /Something/ }]}                                               | ${"Invalid name property at index 0: Expected a string or function."}
+    ${[{ name: "React errors", match: undefined }]}                                     | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
+    ${[{ name: "React errors", match: null }]}                                          | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
+    ${[{ name: ({ type }: ConsoleMessage): string => `console.${type}`, match: null }]} | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
   `("should throw an error when invalid groups option is provided", ({ groups, errorMessage }) => {
     expect(() => initializeOptions({ groups })).toThrow(errorMessage);
   });
