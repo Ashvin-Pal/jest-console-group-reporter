@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 0.14.0
+
+### Minor Changes
+
+- ecb08a1: Add license and documentation
+
 ## 0.13.0
 
 ### Minor Changes
