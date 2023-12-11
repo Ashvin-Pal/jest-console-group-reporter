@@ -26,7 +26,7 @@
     "build": "tsup",
     "lint": "eslint ./src/**/* -c ./.eslintrc.json",
     "format:check": "prettier ./src --check",
-    "ci:publish": "pnpm publish --no-git-checks",
+    "ci:publish": "pnpm build && pnpm publish --no-git-checks",
     "ci:version": "pnpm changeset version"
   },
   "dependencies": {
