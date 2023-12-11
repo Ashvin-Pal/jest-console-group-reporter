@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 0.14.1
+
+### Patch Changes
+
+- df4d047: fix: missing build script in ci publish command
+
 ## 0.14.0
 
 ### Minor Changes
