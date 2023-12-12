@@ -77,7 +77,7 @@ describe("initializeOptions", () => {
     ${[1]}  | ${"Invalid filter at index 0: Expected a string, function, or RegExp."}
   `(
     "Should throw an error when invalid filters option is provided",
-    ({ filters, errorMessage }) => {
+    ({ filters, errorMessage }: { filters: Options["filters"]; errorMessage: string }) => {
       expect(() => initializeOptions({ filters })).toThrow(errorMessage);
     }
   );
@@ -93,7 +93,10 @@ describe("initializeOptions", () => {
     ${[{ name: "React errors", match: undefined }]}                                     | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
     ${[{ name: "React errors", match: null }]}                                          | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
     ${[{ name: ({ type }: ConsoleMessage): string => `console.${type}`, match: null }]} | ${"Invalid match property at index 0: Expected a string, function, or RegExp."}
-  `("should throw an error when invalid groups option is provided", ({ groups, errorMessage }) => {
-    expect(() => initializeOptions({ groups })).toThrow(errorMessage);
-  });
+  `(
+    "should throw an error when invalid groups option is provided",
+    ({ groups, errorMessage }: { groups: Options["groups"]; errorMessage: string }) => {
+      expect(() => initializeOptions({ groups })).toThrow(errorMessage);
+    }
+  );
 });

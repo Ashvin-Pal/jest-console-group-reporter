@@ -1,5 +1,5 @@
 import { shouldFilterMessage } from "../shouldFilterMessage";
-import type { ConsoleMessage } from "@/types";
+import type { ConsoleMessage, Options } from "@/types";
 
 const errorConsoleMessage = { message: "error", type: "error", origin: "console" };
 const errorTypePredicateFn = ({ type }: ConsoleMessage): boolean => type === "error";
@@ -14,7 +14,15 @@ describe("shouldFilterMessage", () => {
     ${["warn", "error"]} | ${errorConsoleMessage} | ${true}
   `(
     "filters out messages correctly when matching a string filter",
-    ({ filters, consoleMessage, expectedOutput }) => {
+    ({
+      filters,
+      consoleMessage,
+      expectedOutput,
+    }: {
+      filters: Options["filters"];
+      consoleMessage: ConsoleMessage;
+      expectedOutput: boolean;
+    }) => {
       expect(shouldFilterMessage(filters, consoleMessage)).toBe(expectedOutput);
     }
   );
@@ -26,7 +34,15 @@ describe("shouldFilterMessage", () => {
     ${[/warn/, /error/]} | ${errorConsoleMessage} | ${true}
   `(
     "filters out messages correctly when matching a regex expression",
-    ({ filters, consoleMessage, expectedOutput }) => {
+    ({
+      filters,
+      consoleMessage,
+      expectedOutput,
+    }: {
+      filters: Options["filters"];
+      consoleMessage: ConsoleMessage;
+      expectedOutput: boolean;
+    }) => {
       expect(shouldFilterMessage(filters, consoleMessage)).toBe(expectedOutput);
     }
   );
@@ -41,7 +57,15 @@ describe("shouldFilterMessage", () => {
     ${[errorTypePredicateFn, originTypePredicateFn]} | ${{ message: "error message", type: "warn", origin: "nowhere" }}   | ${false}
   `(
     "filters out messages correctly when using a predicate function",
-    ({ filters, consoleMessage, expectedOutput }) => {
+    ({
+      filters,
+      consoleMessage,
+      expectedOutput,
+    }: {
+      filters: Options["filters"];
+      consoleMessage: ConsoleMessage;
+      expectedOutput: boolean;
+    }) => {
       expect(shouldFilterMessage(filters, consoleMessage)).toBe(expectedOutput);
     }
   );

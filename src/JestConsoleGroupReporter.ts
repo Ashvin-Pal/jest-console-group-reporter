@@ -97,9 +97,8 @@ export class JestConsoleGroupReporter extends DefaultReporter {
   }
 
   displayLogReport(consoleMap: ConsoleMessagesMap, displayOptions: DisplayOptions): void {
-    const summary = buildConsoleMessages({ consoleMap, displayOptions, ...this._options });
-
-    summary.forEach((message) => this.log(message));
+    const consoleMessages = buildConsoleMessages({ consoleMap, displayOptions, ...this._options });
+    this.log(consoleMessages.join("\n"));
   }
 
   stripConsoleMessagesFromResults(testResult: TestResult): TestResult {
