@@ -1,5 +1,13 @@
 # jest-console-group-reporter
 
+## 0.14.2
+
+### Patch Changes
+
+- 88fd515: - call this.log once
+  - improve eslint configurations
+  - update docs with types decleration
+
 ## 0.14.1
 
 ### Patch Changes
