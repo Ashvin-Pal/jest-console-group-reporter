@@ -41,5 +41,7 @@ export function getGroupName(consoleMessage: ConsoleMessage, groups: Options["gr
     }
   }
 
+  console.warn("A serious error");
+
   return { groupName: consoleMessage.message, isCustomGroup: false };
 }
