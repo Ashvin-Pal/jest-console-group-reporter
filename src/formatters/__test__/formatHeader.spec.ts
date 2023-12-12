@@ -1,3 +1,4 @@
+import type { ColorTypes } from "@/types";
 import { formatHeader } from "../formatHeader";
 
 describe("formatHeader", () => {
@@ -8,8 +9,19 @@ describe("formatHeader", () => {
     ${"warn"}  | ${0}  | ${"    \u001b[0m\u001b[33m\u001b[1mWARN   \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m0\u001b[22m\u001b[39m\u001b[0m    "}
     ${"debug"} | ${12} | ${"    \u001b[0m\u001b[35m\u001b[1mDEBUG  \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m12\u001b[22m\u001b[39m\u001b[0m   "}
     ${"log"}   | ${12} | ${"    \u001b[0m\u001b[36m\u001b[1mLOG    \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m12\u001b[22m\u001b[39m\u001b[0m   "}
-  `("Should format header correctly", ({ type, count, expectedOutput }) => {
-    const formattedHeader = formatHeader({ type, count });
-    expect(formattedHeader).toEqual(expectedOutput);
-  });
+  `(
+    "Should format header correctly",
+    ({
+      type,
+      count,
+      expectedOutput,
+    }: {
+      type: ColorTypes;
+      count: number;
+      expectedOutput: string;
+    }) => {
+      const formattedHeader = formatHeader({ type, count });
+      expect(formattedHeader).toEqual(expectedOutput);
+    }
+  );
 });
