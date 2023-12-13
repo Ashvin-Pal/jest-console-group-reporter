@@ -81,15 +81,15 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     const shouldDisplay = displayOption.enabled && (consoleMessagesMap.size || filteredCount);
 
     if (shouldDisplay) {
-      this.displayReportHeader();
+      this.displayReportHeader(displayOption);
       this.displayLogReport(consoleMessagesMap, displayOption);
       this.displayFilteredCount(filteredCount);
       this.insertTestSeparator();
     }
   }
 
-  displayReportHeader(): void {
-    this.log(buildHeader());
+  displayReportHeader(displayOption: DisplayOptions): void {
+    this.log(buildHeader(displayOption));
   }
 
   insertTestSeparator(): void {
