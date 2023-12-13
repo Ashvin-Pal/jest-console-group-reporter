@@ -35,13 +35,19 @@ const isMatch = (consoleMessage: ConsoleMessage, match: Matcher): boolean => {
  */
 export function getGroupName(consoleMessage: ConsoleMessage, groups: Options["groups"]): GroupName {
   for (const { match, name } of groups) {
+    console.error(
+      "Objects are not valid as a React child - React expects you to provide valid React elements or strings as children within JSX. Attempting to render a JavaScript object directly is not supported. To address this error, consider converting the object to a string or rendering its properties individually as React elements."
+    );
     if (isMatch(consoleMessage, match)) {
       const groupName = typeof name === "function" ? name(consoleMessage) : name;
+      console.debug("Function matched the following group name: " + groupName);
       return { groupName, isCustomGroup: true };
     }
   }
 
-  console.warn("A serious error");
+  console.warn(
+    "Warning: Each child in a list should have a unique 'key' prop - React expects each item in a list to have a unique 'key' prop. This helps React efficiently update and reorder elements when the list changes. Failing to provide unique keys may not result in immediate errors but can lead to suboptimal performance and rendering issues. To address this warning, ensure that each item in the list has a unique 'key' property assigned."
+  );
 
   return { groupName: consoleMessage.message, isCustomGroup: false };
 }
