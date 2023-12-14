@@ -1,5 +1,7 @@
 # jest-console-group-reporter
 
+![hero](banner.jpg)
+
 A custom Jest reporter that groups console messages, offers message filtering, and provides flexible display configuration options.
 
 - Written in Typescript
