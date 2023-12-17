@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 0.15.0
+
+### Minor Changes
+
+- cd989cd: Add banner image for documentation
+
 ## 0.14.2
 
 ### Patch Changes
