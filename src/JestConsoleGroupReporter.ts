@@ -48,6 +48,7 @@ export class JestConsoleGroupReporter extends DefaultReporter {
       consoleMessagesMap: this.aggregatedConsoleMessagesMap,
       filteredCount: this.filteredMessageCount,
       displayOption: this._options.afterAllTests,
+      type: "afterAllTests",
     });
     super.onRunComplete();
     this.testSummaryReporter.onRunComplete(testContexts, aggregatedResults);
@@ -66,6 +67,7 @@ export class JestConsoleGroupReporter extends DefaultReporter {
       consoleMessagesMap,
       filteredCount,
       displayOption: this._options.afterEachTest,
+      type: "afterEachTest",
     });
   }
 
@@ -73,23 +75,25 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     consoleMessagesMap,
     filteredCount,
     displayOption,
+    type,
   }: {
     consoleMessagesMap: ConsoleMessagesMap;
     filteredCount: number;
     displayOption: DisplayOptions;
+    type: keyof Pick<Options, "afterAllTests" | "afterEachTest">;
   }): void {
     const shouldDisplay = displayOption.enabled && (consoleMessagesMap.size || filteredCount);
 
     if (shouldDisplay) {
-      this.displayReportHeader();
+      this.displayReportHeader(type);
       this.displayLogReport(consoleMessagesMap, displayOption);
       this.displayFilteredCount(filteredCount);
       this.insertTestSeparator();
     }
   }
 
-  displayReportHeader(): void {
-    this.log(buildHeader());
+  displayReportHeader(headerFor: keyof Pick<Options, "afterAllTests" | "afterEachTest">): void {
+    this.log(buildHeader(headerFor));
   }
 
   insertTestSeparator(): void {
