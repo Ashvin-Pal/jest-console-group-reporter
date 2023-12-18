@@ -1,5 +1,17 @@
 # jest-console-group-reporter
 
+## 0.16.0
+
+### Minor Changes
+
+- 315675b: Updated the report headers to differentiate between individual test summaries and an overall summary. Prior to this change, both headers were the same.
+
+## 0.15.0
+
+### Minor Changes
+
+- cd989cd: Add banner image for documentation
+
 ## 0.14.2
 
 ### Patch Changes
