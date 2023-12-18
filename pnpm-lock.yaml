@@ -56,8 +56,8 @@ devDependencies:
     specifier: '>=25.1.0'
     version: 29.7.0(@types/node@20.10.1)
   jest-console-group-reporter:
-    specifier: 0.14.2
-    version: 0.14.2(@jest/reporters@29.7.0)(jest-message-util@29.7.0)
+    specifier: 0.16.0
+    version: 0.16.0(@jest/reporters@29.7.0)(jest-message-util@29.7.0)
   prettier:
     specifier: ^3.1.0
     version: 3.1.0
@@ -3461,8 +3461,8 @@ packages:
       - supports-color
     dev: true
 
-  /jest-console-group-reporter@0.14.2(@jest/reporters@29.7.0)(jest-message-util@29.7.0):
-    resolution: {integrity: sha512-BZ7Q7s9p1EefGswM15fWnmg/Ykmb4CZB0G0gPi7xz72qbKOjtOl0USb+rjiKQl6EbC92f1Ze3EdlUL75MGYL2A==}
+  /jest-console-group-reporter@0.16.0(@jest/reporters@29.7.0)(jest-message-util@29.7.0):
+    resolution: {integrity: sha512-b1dAvBDmJEVtaXdn0fsB5qBv4NqIDObgrvkIV4sQ9dOhJ3Loq+L+oDWLoWSQ9PFbF0IPTU5RiGZJv/II4JD7UQ==}
     requiresBuild: true
     peerDependencies:
       '@jest/reporters': '>=25.1.0'
