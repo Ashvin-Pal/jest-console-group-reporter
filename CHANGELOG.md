@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 0.17.0
+
+### Minor Changes
+
+- df400cb: Improve documentation with examples
+
 ## 0.16.0
 
 ### Minor Changes
