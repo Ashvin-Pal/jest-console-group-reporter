@@ -5,5 +5,5 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  reporters: [["jest-console-group-reporter", { useGitHubActions: true }]],
+  reporters: [["./dist", { useGitHubActions: true }]],
 };
