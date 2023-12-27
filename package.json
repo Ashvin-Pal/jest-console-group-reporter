@@ -1,6 +1,6 @@
 {
   "name": "jest-console-group-reporter",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "test": "jest --colors",
     "test:coverage": "jest --coverage",
     "build": "tsup",
-    "lint": "eslint --ext ts ./src/**/* -c ./.eslintrc.json",
+    "lint": "eslint --no-error-on-unmatched-pattern ./src/**/* --ext .ts -c ./.eslintrc.json",
     "format:check": "prettier ./src --check",
     "ci:publish": "pnpm build && pnpm publish --no-git-checks",
     "ci:version": "pnpm changeset version"
