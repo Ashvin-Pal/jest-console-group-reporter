@@ -51,15 +51,14 @@ Minumum requirements:
 To use jest-console-group-reporter with the default configuration, simply add it to your Jest configuration:
 
 ```ts
-// https://www.npmjs.com/package/is-ci
-const isCI = require("is-ci");
-
 // Add the reporter to your jest config
 module.exports = {
   // ...
-  reporters: [["jest-console-group-reporter", { useGithubActions: isCI }]],
+  reporters: ["jest-console-group-reporter"],
 };
 ```
+
+If you would like to use GitHub Actions grouping, see the example [here](#usegithubactions)
 
 ### Filtering console messages
 
