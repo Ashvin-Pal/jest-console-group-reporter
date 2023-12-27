@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`processConsoleMessages Should filter and group messages correctly 1`] = `
+Map {
+  "error" => Map {
+    "Error group" => {
+      "count": 3,
+      "isCustomGroup": true,
+      "messages": Set {
+        "Network connection lost.",
+        "There was an error processing the data.",
+      },
+      "stackTrace": "Network Module",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+  },
+  "warn" => Map {
+    "Server timeout." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "Server",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+    "Resource not found." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "Resource Loader",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+  },
+  "info" => Map {
+    "User profile updated." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "User Profile",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+    "This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "User Profile",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+  },
+}
+`;
+
+exports[`processConsoleMessages Should return console messages map with no custom groups or filters 1`] = `
+Map {
+  "error" => Map {
+    "Network connection lost." => {
+      "count": 2,
+      "isCustomGroup": false,
+      "stackTrace": "Network Module",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+    "There was an error processing the data." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "Server",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+  },
+  "warn" => Map {
+    "Server timeout." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "Server",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+    "Resource not found." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "Resource Loader",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+  },
+  "info" => Map {
+    "User profile updated." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "User Profile",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+    "This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "User Profile",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+  },
+  "log" => Map {
+    "This is a sample log message." => {
+      "count": 1,
+      "isCustomGroup": false,
+      "stackTrace": "App",
+      "testFilePaths": Set {
+        "test.js",
+      },
+    },
+  },
+}
+`;

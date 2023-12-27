@@ -1,10 +1,10 @@
 {
   "name": "jest-console-group-reporter",
-  "version": "0.16.0",
+  "version": "0.18.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
-  "author": "ashvin-Pal",
+  "author": "ashvin-pal",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ashvin-Pal/jest-console-group-reporter"
@@ -24,7 +24,7 @@
     "test": "jest --colors",
     "test:coverage": "jest --coverage",
     "build": "tsup",
-    "lint": "eslint --ext ts ./src/**/* -c ./.eslintrc.json",
+    "lint": "eslint --no-error-on-unmatched-pattern ./src/**/* --ext .ts -c ./.eslintrc.json",
     "format:check": "prettier ./src --check",
     "ci:publish": "pnpm build && pnpm publish --no-git-checks",
     "ci:version": "pnpm changeset version"
@@ -51,6 +51,7 @@
     "husky": "^8.0.3",
     "jest": ">=25.1.0",
     "prettier": "^3.1.0",
+    "ts-node": "^10.9.2",
     "tsup": "^8.0.1",
     "typescript": "^5.3.2",
     "jest-console-group-reporter": "^0.18.0"

@@ -4,11 +4,11 @@ import { formatHeader } from "../formatHeader";
 describe.skip("formatHeader", () => {
   test.each`
     type       | count | expectedOutput
-    ${"error"} | ${12} | ${"    \u001b[0m\u001b[31m\u001b[1mERROR  \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m12\u001b[22m\u001b[39m\u001b[0m   "}
-    ${"error"} | ${0}  | ${"    \u001b[0m\u001b[31m\u001b[1mERROR  \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m0\u001b[22m\u001b[39m\u001b[0m    "}
-    ${"warn"}  | ${0}  | ${"    \u001b[0m\u001b[33m\u001b[1mWARN   \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m0\u001b[22m\u001b[39m\u001b[0m    "}
-    ${"debug"} | ${12} | ${"    \u001b[0m\u001b[35m\u001b[1mDEBUG  \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m12\u001b[22m\u001b[39m\u001b[0m   "}
-    ${"log"}   | ${12} | ${"    \u001b[0m\u001b[36m\u001b[1mLOG    \u001b[22m\u001b[39m\u001b[0m \u001b[0m\u001b[37m\u001b[1m12\u001b[22m\u001b[39m\u001b[0m   "}
+    ${"error"} | ${12} | ${"    [Bold-Red] ERROR   [Bold-White] 12   "}
+    ${"error"} | ${0}  | ${"    [Bold-Red] ERROR   [Bold-White] 0    "}
+    ${"warn"}  | ${0}  | ${"    [Bold-Yellow] WARN    [Bold-White] 0    "}
+    ${"debug"} | ${12} | ${"    [Bold-Magenta] DEBUG   [Bold-White] 12   "}
+    ${"log"}   | ${12} | ${"    [Bold-Cyan] LOG     [Bold-White] 12   "}
   `(
     "Should format header correctly",
     ({

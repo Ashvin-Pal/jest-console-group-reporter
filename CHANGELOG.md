@@ -1,5 +1,17 @@
 # jest-console-group-reporter
 
+## 0.18.0
+
+### Minor Changes
+
+- ac960cc: Improve documentation and unit test coverage
+
+## 0.17.0
+
+### Minor Changes
+
+- df400cb: Improve documentation with examples
+
 ## 0.16.0
 
 ### Minor Changes

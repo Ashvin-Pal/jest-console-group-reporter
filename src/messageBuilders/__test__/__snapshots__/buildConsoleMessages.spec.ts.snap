@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buildConsoleMessages Build [detailed] console messages correctly when there are group configurations 1`] = `
+[
+  "    [Bold-Red] ERROR   [Bold-White] 2    
+[Red]       Network connection lost.
+[Gray] Network Module
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Red] ERROR   [Bold-White] 1    
+[Red]       There was an error processing the data.
+[Gray] Server
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    
+[Yellow]       Server timeout.
+[Gray] Server
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    
+[Yellow]       Resource not found.
+[Gray] Resource Loader
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Cyan] LOG     [Bold-White] 1    
+[Cyan]       This is a sample log message.
+[Gray] App
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Blue] INFO    [Bold-White] 1    
+[Blue]       User profile updated.
+[Gray] User Profile
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Blue] INFO    [Bold-White] 1    
+[Blue]       This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries.
+[Gray] User Profile
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Cyan] LOG     [Bold-White] 1    
+[Cyan]       This is a sample log message.
+[Gray] App
+
+    Test File Path:
+      1. test.js
+",
+]
+`;
+
+exports[`buildConsoleMessages Build [detailed] console messages correctly when there are group configurations 2`] = `
+[
+  "    [Bold-Red] ERROR   [Bold-White] 3    
+[Red]       Error group
+[Gray] Network Module
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    
+[Yellow]       Server timeout.
+[Gray] Server
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    
+[Yellow]       Resource not found.
+[Gray] Resource Loader
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Cyan] LOG     [Bold-White] 1    
+[Cyan]       This is a sample log message.
+[Gray] App
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Blue] INFO    [Bold-White] 1    
+[Blue]       User profile updated.
+[Gray] User Profile
+
+    Test File Path:
+      1. test.js
+",
+  "    [Bold-Blue] INFO    [Bold-White] 1    
+[Blue]       This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries.
+[Gray] User Profile
+
+    Test File Path:
+      1. test.js
+",
+]
+`;
+
+exports[`buildConsoleMessages Build [detailed] console messages correctly when using the useGithubActions configuration 1`] = `
+[
+  "::group::    [Bold-Red] ERROR   [Bold-White] 3    [Red] Error group
+
+[Red]       Error group
+[Gray] Network Module
+
+    Test File Path:
+      1. test.js
+
+::endgroup::",
+  "::group::    [Bold-Yellow] WARN    [Bold-White] 1    [Yellow] Server timeout.
+
+[Yellow]       Server timeout.
+[Gray] Server
+
+    Test File Path:
+      1. test.js
+
+::endgroup::",
+  "::group::    [Bold-Yellow] WARN    [Bold-White] 1    [Yellow] Resource not found.
+
+[Yellow]       Resource not found.
+[Gray] Resource Loader
+
+    Test File Path:
+      1. test.js
+
+::endgroup::",
+  "::group::    [Bold-Cyan] LOG     [Bold-White] 1    [Cyan] This is a sample log message.
+
+[Cyan]       This is a sample log message.
+[Gray] App
+
+    Test File Path:
+      1. test.js
+
+::endgroup::",
+  "::group::    [Bold-Blue] INFO    [Bold-White] 1    [Blue] User profile updated.
+
+[Blue]       User profile updated.
+[Gray] User Profile
+
+    Test File Path:
+      1. test.js
+
+::endgroup::",
+  "::group::    [Bold-Blue] INFO    [Bold-White] 1    [Blue] This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries...
+
+[Blue]       This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries.
+[Gray] User Profile
+
+    Test File Path:
+      1. test.js
+
+::endgroup::",
+]
+`;
+
+exports[`buildConsoleMessages Build [summary] console messages correctly when there are group configurations 1`] = `
+[
+  "    [Bold-Red] ERROR   [Bold-White] 3    [Red] Error group",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    [Yellow] Server timeout.",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    [Yellow] Resource not found.",
+  "    [Bold-Cyan] LOG     [Bold-White] 1    [Cyan] This is a sample log message.",
+  "    [Bold-Blue] INFO    [Bold-White] 1    [Blue] User profile updated.",
+  "    [Bold-Blue] INFO    [Bold-White] 1    [Blue] This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries...",
+]
+`;
+
+exports[`buildConsoleMessages Build [summary] console messages correctly when there are no group configurations 1`] = `
+[
+  "    [Bold-Red] ERROR   [Bold-White] 2    [Red] Network connection lost.",
+  "    [Bold-Red] ERROR   [Bold-White] 1    [Red] There was an error processing the data.",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    [Yellow] Server timeout.",
+  "    [Bold-Yellow] WARN    [Bold-White] 1    [Yellow] Resource not found.",
+  "    [Bold-Cyan] LOG     [Bold-White] 1    [Cyan] This is a sample log message.",
+  "    [Bold-Blue] INFO    [Bold-White] 1    [Blue] User profile updated.",
+  "    [Bold-Blue] INFO    [Bold-White] 1    [Blue] This is an exceptionally lengthy info message. It ensures that extremely long messages are truncated when they exceed 150 characters in test summaries...",
+  "    [Bold-Cyan] LOG     [Bold-White] 1    [Cyan] This is a sample log message.",
+]
+`;

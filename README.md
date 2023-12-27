@@ -1,102 +1,112 @@
 # jest-console-group-reporter
 
-![hero](banner.jpg)
+A Jest reporter that groups console messages, allows filtering, and provides flexible display configuration options.
 
-A custom Jest reporter that groups console messages, offers message filtering, and provides flexible display configuration options.
+![hero](bannerGif.gif)
 
 - Written in Typescript
 - Supports displaying in GitHub Actions
 - Provides configuration types for type safety
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Basic configuration](#basic-configuration)
+  - [Filtering console messages](#filtering-console-messages)
+  - [Grouping console messages](#grouping-console-messages)
+  - [Dynamic group names](#dynamic-group-names)
+  - [Configuration](#configuration)
+    - [filters](#filters)
+    - [groups](#groups)
+    - [consoleLevels](#consolelevels)
+    - [afterEachTest](#aftereachtest)
+    - [afterAllTests](#afteralltests)
+    - [useGitHubActions](#usegithubactions)
+  - [Summary Reporter](#summary-reporter)
+- [Known issues](#known-issues)
+
 ## Installation
 
-You can install `jest-console-group-reporter` using your preferred package manager:
+You can install `jest-console-group-reporter` using your favourite package manager:
 
 ```bash
 # npm
 npm install jest-console-group-reporter -D
-
 # yarn
 yarn add jest-console-group-reporter -D
-
 # pnpm
 pnpm add jest-console-group-reporter -D
 ```
 
+Minumum requirements:
+
+- Jest 25.1 or later
+- Node.js 16 or later
+
 ## Usage
 
-#### Basic configuration
+### Basic configuration
 
 To use jest-console-group-reporter with the default configuration, simply add it to your Jest configuration:
 
 ```ts
-// jest.config.js
+// Add the reporter to your jest config
 module.exports = {
-  // other jest config
+  // ...
   reporters: ["jest-console-group-reporter"],
 };
 ```
 
-#### Filtering console messages
+If you would like to use GitHub Actions grouping, see the example [here](#usegithubactions)
 
-You can filter specific console messages by providing string, regular expression, or predicate function in the `filters` option:
+### Filtering console messages
+
+You can filter specific console messages by providing a string, regular expression, or predicate function in the `filters` option:
 
 ```ts
-// jest.config.js
-
-const filters = [
-  // using a string
-  "error",
-  // Using a regex expression
-  /^error/,
-  // Using a predicate function
-  ({ type }) => type === "error",
-];
+// Add as many as you like!
+const filters = ["error", /^react/];
 
 module.exports = {
-  // ...other Jest configuration
+  // ...
   reporters: [["jest-console-group-reporter", { filters }]],
 };
 ```
 
-#### Grouping console messages
+### Grouping console messages
 
 You can create custom message groups by specifying them in the `groups` option:
 
 ```ts
-// jest.config.js
-
+// Add as many as you like!
 const groups = [
   {
     name: "React console messages",
     match: /react/,
   },
-  // Add more custom groups as needed
 ];
 
 module.exports = {
-  // ...other Jest configuration
+  // ...
   reporters: [["jest-console-group-reporter", { groups }]],
 };
 ```
 
-#### Dynamic group names
+### Dynamic group names
 
 You can create custom message groups by specifying them in the `groups` option:
 
 ```ts
-// jest.config.js
-
 const groups = [
   {
     name: ({ type }) => `React console.${type}`,
     match: /react/,
   },
-  // Add more custom groups as needed
 ];
 
 module.exports = {
-  // ...other Jest configuration
+  // ...
   reporters: [["jest-console-group-reporter", { groups }]],
 };
 ```
@@ -124,108 +134,240 @@ const defaultOptions: Options = {
 };
 ```
 
-Here are the available configuration options for `jest-console-group-reporter`:
+Here are the available configuration options:
 
-- `filters`: An array of regular expressions, strings, or functions to filter out console messages.
+### filters
+
+An array of regular expressions, strings, or functions to filter out console messages.
+
   <details>
-    <summary>Type decleration</summary>
+    <summary>Type declaration</summary>
 
-  ```ts
-  interface ConsoleMessage {
-    type: string;
-    message: string;
-    origin: string;
-  }
+```ts
+interface ConsoleMessage {
+  type: string;
+  message: string;
+  origin: string | undefined;
+}
 
-  type Matcher = string | RegExp | (({ type, message, origin }: ConsoleMessage) => boolean);
-
-  type Filters = Array<Matcher>;
-  ```
+type Filters = Array<string | RegExp | ((consoleMessage: ConsoleMessage) => boolean)>;
+```
 
   </details>
 
-- `groups`: An array of custom groups, where each group has a `name` and a `match` property. Messages matching the `match` criteria will be grouped under the specified `name`.
+##### Using a predicate function
+
+When using a predicate function, the return type must be a `boolean`.
+
+**Note: The origin is not available for all types of console message. So you will need to test it before using it.**
+
+```ts
+interface ConsoleMessage {
+  origin: string;
+  type: string | undefined;
+  message: string;
+}
+
+const filters = [
+  ({ message }: ConsoleMessage) => message === "react",
+  ({ origin }: ConsoleMessage) => origin && origin.match(/node_modules/),
+  ({ type }: ConsoleMessage) => type === "error",
+];
+
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { filters }]],
+};
+```
+
+### groups
+
+An array of custom groups, where each group has a `name` and `match` property. Messages matching the `match` criteria will be grouped under the specified `name`.
+
+**Note: The origin is not available for all types of console message. So you will need to test it before using it.**
+
   <details>
-    <summary>Type decleration</summary>
+    <summary>Type declaration</summary>
 
-  ```ts
-  interface ConsoleMessage {
-    type: string;
-    message: string;
-    origin: string;
-  }
+```ts
+interface ConsoleMessage {
+  type: string;
+  message: string;
+  origin: string;
+}
 
-  type Matcher = string | RegExp | (({ type, message, origin }: ConsoleMessage) => boolean);
+type Matcher = string | RegExp | (({ type, message, origin }: ConsoleMessage) => boolean);
 
-  type Groups = Array<{
-    match: Matcher;
-    name: string | (({ type, message, origin }: ConsoleMessage) => string);
-  }>;
-  ```
+type Groups = Array<{
+  match: Matcher;
+  name: string | (({ type, message, origin }: ConsoleMessage) => string);
+}>;
+```
 
   </details>
 
-- `consoleLevels`: An array of console message types to capture (e.g., 'log', 'warn', 'error').
-  <details>
-    <summary>Type decleration</summary>
+#### Using a predicate function
 
-  ```ts
-  type ConsoleLevels = string[];
-  ```
+```ts
+interface ConsoleMessage {
+  origin: string;
+  type: string | undefined;
+  message: string;
+}
+
+const groups = [
+  {
+    name: "React warnings",
+    match: ({ message, type }: ConsoleMessage) => message.match(/react/) && type === "warn",
+  },
+  {
+    name: "Error from some module",
+    match: ({ origin }: ConsoleMessage) => origin && origin.match(/some_module/),
+  },
+];
+
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { groups }]],
+};
+```
+
+### consoleLevels
+
+An array of console message types to capture (e.g., 'log', 'warn', 'error').
+
+  <details>
+    <summary>Type declaration</summary>
+
+```ts
+type ConsoleLevels = string[];
+```
 
   </details>
 
-- `afterEachTest`: Configuration for displaying messages after each test.
+#### Example of only capturing error and warning messages
 
-  - `enabled` (boolean): Enable or disable displaying messages after each test.
-  - `filePaths` (boolean): Include file paths in the report.
-  - `reportType` ("summary" | "detailed"): Choose between "summary" and "detailed" report types <br>
-  <br>
+```ts
+const consoleLevels = ["error", "warn"];
+
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { consoleLevels }]],
+};
+```
+
+### afterEachTest
+
+Configuration for displaying messages after each test.
+
   <details>
-      <summary>Type decleration</summary>
+      <summary>Type declaration</summary>
 
-  ```ts
-  interface DisplayOptions {
-    enabled: boolean;
-    filePaths: boolean;
-    reportType: "summary" | "detailed";
-  }
-  ```
+```ts
+interface DisplayOptions {
+  enabled: boolean;
+  filePaths: boolean;
+  reportType: "summary" | "detailed";
+}
+```
+
+  </details>
+<br>
+
+- `enabled` (boolean): Enable or disable displaying messages after each test.
+- `filePaths` (boolean): Include file paths in the report.
+- `reportType` ("summary" | "detailed"): Choose between "summary" and "detailed" report types
+
+#### Disable displaying summary report after each test
+
+```ts
+const afterEachTest = {
+  enable: false;
+}
+
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { afterEachTest }]],
+};
+```
+
+### afterAllTests
+
+Configuration for displaying messages after all tests have run.
+
+<details>
+  <summary>Type declaration</summary>
+
+```ts
+interface DisplayOptions {
+  enabled: boolean;
+  filePaths: boolean;
+  reportType: "summary" | "detailed";
+}
+```
+
+  </details>
+<br>
+
+- `enabled` (boolean): Enable or disable displaying messages after all tests.
+- `filePaths` (boolean): Include file paths in the report.
+- `reportType` ("summary" | "detailed"): Choose between "summary" and "detailed" report types.
+
+#### Disable displaying filePaths
+
+```ts
+const afterAllTest = {
+  filePaths: false;
+}
+
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { afterAllTest }]],
+};
+```
+
+### useGitHubActions
+
+Enable GitHub Actions specific behavior. This will wrap each console message in a dropdown. You will only want to enable this property when running in github actions.
+
+  <details>
+    <summary>Type declaration</summary>
+
+```ts
+type UseGithubActions = boolean;
+```
 
   </details>
 
-- `afterAllTests`: Configuration for displaying messages after all tests have run.
+#### Using the is-ci package
 
-  - `enabled` (boolean): Enable or disable displaying messages after all tests.
-  - `filePaths` (boolean): Include file paths in the report.
-  - `reportType` ("summary" | "detailed"): Choose between "summary" and "detailed" report types.
-  <br>
-  <br>
-  <details>
-        <summary>Type decleration</summary>
+```ts
+/**
+ * @see https://www.npmjs.com/package/is-ci
+ */
+const isCI = require("is-ci");
 
-  ```ts
-  interface DisplayOptions {
-    enabled: boolean;
-    filePaths: boolean;
-    reportType: "summary" | "detailed";
-  }
-  ```
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { useGithubActions: isCI }]],
+};
+```
 
-  </details>
+#### Using a process.env variable
 
-- `useGitHubActions` (boolean): Enable GitHub Actions specific behavior. This will wrap each console message in dropdown.
-  <details>
-    <summary>Type decleration</summary>
+```ts
+const useGithubActions = process.env.IS_CI;
 
-  ```ts
-  type UseGithubActions = boolean;
-  ```
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { useGithubActions }]],
+};
+```
 
-  </details>
-
-Customize these options in your Jest configuration to tailor the reporter's behavior to your project's needs.
-
-### Summary Reporter
+## Summary Reporter
 
 The jest-console-group-reporter internally uses a summary reporter provided by Jest to display the overall test summary. You do not need to explicitly pass this summary reporter to the reporter options, as it is automatically integrated into the jest-console-group-reporter.
+
+## Known issues
+
+When running Jest with for a single file (e.g. jest src/someFile.js), the reporter is not activated. This seems to be bug with Jest and not this reporter :)
