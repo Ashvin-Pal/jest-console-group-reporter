@@ -7,23 +7,23 @@ import {
   type Config,
   type TestContext,
 } from "@jest/reporters";
+import type { DisplayOptions, ConsoleMessagesMap, Options } from "@/types";
 import { buildConsoleMessages, buildFilteredMessage, buildHeader } from "@/messageBuilders";
 import { mergeConsoleMaps } from "@/mergeConsoleMaps";
-import type { DisplayOptions, ConsoleMessagesMap, Options } from "@/types";
 import { processConsoleMessages } from "./processConsoleMessages";
 import { initializeOptions } from "./initializeOptions";
 
 export class JestConsoleGroupReporter extends DefaultReporter {
-  aggregatedConsoleMessagesMap: ConsoleMessagesMap;
-  filteredMessageCount = 0;
-  _jestGlobalConfig: Config.GlobalConfig;
-  _options: Options;
-  testSummaryReporter: SummaryReporter;
+  private aggregatedConsoleMessagesMap: ConsoleMessagesMap;
+  private filteredMessageCount = 0;
+  private jestGlobalConfig: Config.GlobalConfig;
+  private options: Options;
+  private testSummaryReporter: SummaryReporter;
 
   constructor(globalConfig: Config.GlobalConfig, options: Options) {
     super(globalConfig);
-    this._jestGlobalConfig = globalConfig;
-    this._options = initializeOptions(options);
+    this.jestGlobalConfig = globalConfig;
+    this.options = initializeOptions(options);
     this.aggregatedConsoleMessagesMap = new Map();
     this.testSummaryReporter = new SummaryReporter(globalConfig);
   }
@@ -31,47 +31,57 @@ export class JestConsoleGroupReporter extends DefaultReporter {
   /**
    * Called by Jest once when the test run starts.
    */
-  override onRunStart(aggregatedResults: AggregatedResult, options: ReporterOnStartOptions): void {
+  public override onRunStart(
+    aggregatedResults: AggregatedResult,
+    options: ReporterOnStartOptions
+  ): void {
     super.onRunStart(aggregatedResults, options);
     this.testSummaryReporter.onRunStart(aggregatedResults, options);
   }
 
   /**
-   * Called once by Jest once after all test is completed.
+   * Called once by Jest after all tests are completed.
    */
   // @ts-expect-error https://github.com/microsoft/TypeScript/issues/54426
-  override onRunComplete(
+  public override onRunComplete(
     testContexts: Set<TestContext>,
     aggregatedResults: AggregatedResult
   ): void {
     this.handleReporting({
       consoleMessagesMap: this.aggregatedConsoleMessagesMap,
       filteredCount: this.filteredMessageCount,
-      displayOption: this._options.afterAllTests,
+      displayOption: this.options.afterAllTests,
       type: "afterAllTests",
     });
     super.onRunComplete();
     this.testSummaryReporter.onRunComplete(testContexts, aggregatedResults);
   }
 
-  override printTestFileHeader(
+  /**
+   * Intercepts the Jest default reporter to control how console messages are displayed in the terminal.
+   */
+  public override printTestFileHeader(
     testPath: string,
     config: Config.ProjectConfig,
     testResult: TestResult
   ): void {
     const { consoleMessagesMap, filteredCount } = this.processTestResult(config, testResult);
-    this.storeConsoleMesages(consoleMessagesMap);
+    this.storeConsoleMessages(consoleMessagesMap);
     this.storeFilteredCount(filteredCount);
     super.printTestFileHeader(testPath, config, this.stripConsoleMessagesFromResults(testResult));
     this.handleReporting({
       consoleMessagesMap,
       filteredCount,
-      displayOption: this._options.afterEachTest,
+      displayOption: this.options.afterEachTest,
       type: "afterEachTest",
     });
   }
 
-  handleReporting({
+  /**
+   * Orchestrates the various reporting sections by determining whether to display reports
+   * based on the given display options and then delegating to specific reporting functions.
+   */
+  private handleReporting({
     consoleMessagesMap,
     filteredCount,
     displayOption,
@@ -92,47 +102,80 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     }
   }
 
-  displayReportHeader(headerFor: keyof Pick<Options, "afterAllTests" | "afterEachTest">): void {
+  /**
+   * Displays the report header based on the specified reporting context ('afterAllTests' or 'afterEachTest').
+   * Utilizes the 'buildHeader' function to construct the header content.
+   */
+  private displayReportHeader(
+    headerFor: keyof Pick<Options, "afterAllTests" | "afterEachTest">
+  ): void {
     this.log(buildHeader(headerFor));
   }
 
-  insertTestSeparator(): void {
+  /**
+   * Inserts a blank line as a separator in the test output to enhance readability.
+   * This method is typically used to visually delineate between sections of the report.
+   */
+  private insertTestSeparator(): void {
     this.log("");
   }
 
-  displayLogReport(consoleMap: ConsoleMessagesMap, displayOptions: DisplayOptions): void {
-    const consoleMessages = buildConsoleMessages({ consoleMap, displayOptions, ...this._options });
+  /**
+   * Displays the formatted console messages based on the provided map and display options.
+   */
+  private displayLogReport(consoleMap: ConsoleMessagesMap, displayOptions: DisplayOptions): void {
+    const consoleMessages = buildConsoleMessages({ consoleMap, displayOptions, ...this.options });
     this.log(consoleMessages.join("\n"));
   }
 
-  stripConsoleMessagesFromResults(testResult: TestResult): TestResult {
+  /**
+   * Removes console messages from the test results, setting them to undefined as the Jest
+   * default reporter expects undefined when there are no console messages to display.
+   */
+  private stripConsoleMessagesFromResults(testResult: TestResult): TestResult {
     return { ...testResult, console: undefined };
   }
 
-  storeFilteredCount(filteredOut: number): void {
+  /**
+   * Increments the count of filtered out messages by the given number.
+   * This is used to keep track of the number of messages filtered out based on user configuration.
+   */
+  private storeFilteredCount(filteredOut: number): void {
     this.filteredMessageCount += filteredOut;
   }
 
-  storeConsoleMesages(consoleMessagesMap: ConsoleMessagesMap): void {
+  /**
+   * Merges new console messages into the existing aggregated console messages map.
+   * This ensures all console messages are accounted for in the final report.
+   */
+  private storeConsoleMessages(consoleMessagesMap: ConsoleMessagesMap): void {
     this.aggregatedConsoleMessagesMap = mergeConsoleMaps(
       this.aggregatedConsoleMessagesMap,
       consoleMessagesMap
     );
   }
 
-  displayFilteredCount(filteredOut: number): void {
+  /**
+   * Displays the count of filtered out messages if there are any.
+   * It's used to inform users about the number of messages not displayed due to filtering.
+   */
+  private displayFilteredCount(filteredOut: number): void {
     if (filteredOut) {
       this.log(buildFilteredMessage(filteredOut));
     }
   }
 
-  processTestResult(
+  /**
+   * Processes the test result to produce a console messages map and the count of filtered messages.
+   * It adapts the test result into a structured format for reporting purposes.
+   */
+  private processTestResult(
     config: Config.ProjectConfig,
     testResult: TestResult
   ): {
     consoleMessagesMap: ConsoleMessagesMap;
     filteredCount: number;
   } {
-    return processConsoleMessages({ ...testResult, ...this._options, config });
+    return processConsoleMessages({ ...testResult, ...this.options, config });
   }
 }
