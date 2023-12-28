@@ -28,13 +28,13 @@ export function initializeOptions(initialOptions: InitialReporterOptions = {}): 
     filters: [],
     groups: [],
     afterEachTest: {
-      enabled: true,
+      enable: true,
       reportType: "summary",
       filePaths: false,
     },
     afterAllTests: {
       reportType: "detailed",
-      enabled: true,
+      enable: true,
       filePaths: true,
     },
     useGitHubActions: false,

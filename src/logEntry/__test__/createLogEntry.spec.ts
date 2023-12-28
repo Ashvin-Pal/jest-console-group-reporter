@@ -13,7 +13,7 @@ describe("createLogObject", () => {
     expect(log.isCustomGroup).toBe(true);
     expect(log.count).toBe(1);
     expect(Array.from(log.testFilePaths)).toStrictEqual([testFilePath]);
-    expect(Array.from(log?.messages || [])).toStrictEqual([message]);
+    expect(Array.from(log.messages || [])).toStrictEqual([message]);
   });
 
   test("Should correctly handle isCustomGroup false", () => {
