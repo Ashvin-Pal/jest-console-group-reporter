@@ -1,5 +1,12 @@
 # jest-console-group-reporter
 
+## 1.0.0
+
+### Major Changes
+
+- 522a38a: Breaking change!
+  Change display option property name from `enabled` to `enable`
+
 ## 0.18.0
 
 ### Minor Changes
