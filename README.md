@@ -4,7 +4,7 @@ A Jest reporter that groups console messages, allows filtering, and provides fle
 
 ![hero](bannerGif.gif)
 
-- Written in Typescript
+- Written in Typescript :zap:
 - Supports displaying in GitHub Actions
 - Provides configuration types for type safety
 
@@ -28,7 +28,7 @@ A Jest reporter that groups console messages, allows filtering, and provides fle
 
 ## Installation
 
-You can install `jest-console-group-reporter` using your favourite package manager:
+Install `jest-console-group-reporter` using your favorite package manager:
 
 ```bash
 # npm
@@ -39,10 +39,10 @@ yarn add jest-console-group-reporter -D
 pnpm add jest-console-group-reporter -D
 ```
 
-Minumum requirements:
+Minimum requirements
 
-- Jest 25.1 or later
-- Node.js 16 or later
+- Jest 25.1
+- Node.js 16
 
 ## Usage
 
@@ -76,7 +76,7 @@ module.exports = {
 
 ### Grouping console messages
 
-You can create custom message groups by specifying them in the `groups` option:
+You can create custom groups by specifying them in the `groups` option:
 
 ```ts
 // Add as many as you like!
@@ -95,7 +95,7 @@ module.exports = {
 
 ### Dynamic group names
 
-You can create custom message groups by specifying them in the `groups` option:
+You can create dynamic group names by specifying them in the `groups` option:
 
 ```ts
 const groups = [
@@ -121,13 +121,13 @@ const defaultOptions: Options = {
   filters: [],
   groups: [],
   afterEachTest: {
-    enabled: true,
+    enable: true,
     reportType: "summary",
     filePaths: false,
   },
   afterAllTests: {
     reportType: "detailed",
-    enabled: true,
+    enable: true,
     filePaths: true,
   },
   useGitHubActions: false,
@@ -258,14 +258,14 @@ module.exports = {
 
 ### afterEachTest
 
-Configuration for displaying messages after each test.
+Configuration for displaying console messages after each test.
 
   <details>
       <summary>Type declaration</summary>
 
 ```ts
 interface DisplayOptions {
-  enabled: boolean;
+  enable: boolean;
   filePaths: boolean;
   reportType: "summary" | "detailed";
 }
@@ -274,7 +274,7 @@ interface DisplayOptions {
   </details>
 <br>
 
-- `enabled` (boolean): Enable or disable displaying messages after each test.
+- `enable` (boolean): Enable or disable displaying messages after each test.
 - `filePaths` (boolean): Include file paths in the report.
 - `reportType` ("summary" | "detailed"): Choose between "summary" and "detailed" report types
 
@@ -293,14 +293,14 @@ module.exports = {
 
 ### afterAllTests
 
-Configuration for displaying messages after all tests have run.
+Configuration for displaying console messages after all tests have run.
 
 <details>
   <summary>Type declaration</summary>
 
 ```ts
 interface DisplayOptions {
-  enabled: boolean;
+  enable: boolean;
   filePaths: boolean;
   reportType: "summary" | "detailed";
 }
@@ -309,7 +309,7 @@ interface DisplayOptions {
   </details>
 <br>
 
-- `enabled` (boolean): Enable or disable displaying messages after all tests.
+- `enable` (boolean): Enable or disable displaying messages after all tests.
 - `filePaths` (boolean): Include file paths in the report.
 - `reportType` ("summary" | "detailed"): Choose between "summary" and "detailed" report types.
 
@@ -366,8 +366,8 @@ module.exports = {
 
 ## Summary Reporter
 
-The jest-console-group-reporter internally uses a summary reporter provided by Jest to display the overall test summary. You do not need to explicitly pass this summary reporter to the reporter options, as it is automatically integrated into the jest-console-group-reporter.
+The jest-console-group-reporter internally uses the summary reporter provided by Jest to display the overall test summary. You do not need to explicitly pass the summary reporter to the reporter options, as it is automatically integrated by default.
 
 ## Known issues
 
-When running Jest with for a single file (e.g. jest src/someFile.js), the reporter is not activated. This seems to be bug with Jest and not this reporter :)
+When running Jest for a single test file (e.g. jest src/someTest.ts), the reporter is not activated. This seems to be a bug with Jest and not this reporter :)

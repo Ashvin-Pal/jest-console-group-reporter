@@ -9,12 +9,12 @@ describe("initializeOptions", () => {
     groups: [],
     afterEachTest: {
       reportType: "summary",
-      enabled: true,
+      enable: true,
       filePaths: false,
     },
     afterAllTests: {
       reportType: "detailed",
-      enabled: true,
+      enable: true,
       filePaths: true,
     },
     useGitHubActions: false,

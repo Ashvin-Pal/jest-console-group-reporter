@@ -23,7 +23,7 @@ describe("buildConsoleMessages", () => {
         consoleLevels: ["error", "warn", "log", "info", "log"],
         useGitHubActions: false,
         displayOptions: {
-          enabled: true,
+          enable: true,
           filePaths: false,
           reportType: "summary",
         },
@@ -52,7 +52,7 @@ describe("buildConsoleMessages", () => {
         consoleLevels: ["error", "warn", "log", "info", "debug"],
         useGitHubActions: false,
         displayOptions: {
-          enabled: true,
+          enable: true,
           filePaths: false,
           reportType: "summary",
         },
@@ -76,7 +76,7 @@ describe("buildConsoleMessages", () => {
         consoleLevels: ["error", "warn", "log", "info", "log"],
         useGitHubActions: false,
         displayOptions: {
-          enabled: true,
+          enable: true,
           filePaths: true,
           reportType: "detailed",
         },
@@ -105,7 +105,7 @@ describe("buildConsoleMessages", () => {
         consoleLevels: ["error", "warn", "log", "info", "debug"],
         useGitHubActions: false,
         displayOptions: {
-          enabled: true,
+          enable: true,
           filePaths: true,
           reportType: "detailed",
         },
@@ -134,7 +134,7 @@ describe("buildConsoleMessages", () => {
         consoleLevels: ["error", "warn", "log", "info", "debug"],
         useGitHubActions: true,
         displayOptions: {
-          enabled: true,
+          enable: true,
           filePaths: true,
           reportType: "detailed",
         },
