@@ -92,7 +92,7 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     displayOption: DisplayOptions;
     type: keyof Pick<Options, "afterAllTests" | "afterEachTest">;
   }): void {
-    const shouldDisplay = displayOption.enabled && (consoleMessagesMap.size || filteredCount);
+    const shouldDisplay = displayOption.enable && (consoleMessagesMap.size || filteredCount);
 
     if (shouldDisplay) {
       this.displayReportHeader(type);

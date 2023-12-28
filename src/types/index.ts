@@ -21,7 +21,7 @@ export interface ConsoleMessage {
 export type Matcher = string | RegExp | ((arg: ConsoleMessage) => boolean);
 
 export interface DisplayOptions {
-  enabled: boolean;
+  enable: boolean;
   filePaths: boolean;
   reportType: "summary" | "detailed";
 }
