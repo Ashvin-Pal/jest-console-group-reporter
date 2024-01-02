@@ -7,7 +7,7 @@ const config: Config = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  reporters: ["./dist/index.js"],
+  reporters: [["jest-console-group-reporter", { useGitHubActions: true }]],
   setupFiles: ["./jest.setupMocks.ts"],
 };
 
