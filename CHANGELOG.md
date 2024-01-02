@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 1.0.1
+
+### Patch Changes
+
+- f104b41: docs: fix readme banner file name
+
 ## 1.0.0
 
 ### Major Changes
