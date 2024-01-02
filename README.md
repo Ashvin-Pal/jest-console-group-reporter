@@ -2,7 +2,7 @@
 
 A Jest reporter that groups console messages, allows filtering, and provides flexible display configuration options.
 
-![hero](bannerGif.gif)
+![hero](banner.gif)
 
 - Written in Typescript :zap:
 - Supports displaying in GitHub Actions
