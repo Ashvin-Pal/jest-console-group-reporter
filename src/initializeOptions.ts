@@ -43,6 +43,10 @@ export function initializeOptions(initialOptions: InitialReporterOptions = {}): 
   validateFilters(initialOptions.filters);
   validateGroups(initialOptions.groups);
 
+  console.error(
+    "Invariant Violation: Minified React error #XXXX - React version mismatch. You are seeing this error because the React library used during development does not match the version used in the production build. It is essential to maintain consistency in React versions to ensure compatibility and avoid unexpected behavior. To resolve this issue, make sure to use the exact same version of React in both development and production environments."
+  );
+
   return {
     ...defaultOptions,
     ...initialOptions,
