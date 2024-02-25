@@ -65,16 +65,33 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     config: Config.ProjectConfig,
     testResult: TestResult
   ): void {
-    const { consoleMessagesMap, filteredCount } = this.processTestResult(config, testResult);
-    this.storeConsoleMessages(consoleMessagesMap);
-    this.storeFilteredCount(filteredCount);
+    if (this.options.onlyFailingTestSuites && testResult.numFailingTests === 0) {
+      super.printTestFileHeader(testPath, config, this.stripConsoleMessagesFromResults(testResult));
+      return;
+    }
+
+    const processedTestResults = this.processTestResult(config, testResult);
+    this.storeMessages(processedTestResults);
     super.printTestFileHeader(testPath, config, this.stripConsoleMessagesFromResults(testResult));
     this.handleReporting({
-      consoleMessagesMap,
-      filteredCount,
+      ...processedTestResults,
       displayOption: this.options.afterEachTest,
       type: "afterEachTest",
     });
+  }
+
+  /**
+   * Store console messages and filter count.
+   */
+  private storeMessages({
+    consoleMessagesMap,
+    filteredCount,
+  }: {
+    consoleMessagesMap: ConsoleMessagesMap;
+    filteredCount: number;
+  }): void {
+    this.storeConsoleMessages(consoleMessagesMap);
+    this.storeFilteredCount(filteredCount);
   }
 
   /**

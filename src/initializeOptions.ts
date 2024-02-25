@@ -5,6 +5,7 @@ interface InitialReporterOptions {
   filters?: Options["filters"];
   groups?: Options["groups"];
   consoleLevels?: Options["consoleLevels"];
+  onlyFailingTestSuites?: boolean;
   afterEachTest?: {
     enabled?: boolean;
     reportType?: Options["afterAllTests"]["reportType"];
@@ -27,6 +28,7 @@ export function initializeOptions(initialOptions: InitialReporterOptions = {}): 
     consoleLevels: ["error", "warn", "info", "debug", "log"],
     filters: [],
     groups: [],
+    onlyFailingTestSuites: false,
     afterEachTest: {
       enable: true,
       reportType: "summary",

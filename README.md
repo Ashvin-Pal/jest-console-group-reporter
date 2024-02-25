@@ -23,6 +23,7 @@ A Jest reporter that groups console messages, allows filtering, and provides fle
     - [afterEachTest](#aftereachtest)
     - [afterAllTests](#afteralltests)
     - [useGitHubActions](#usegithubactions)
+    - [onlyFailingTestSuites](#onlyFailingTestSuites)
   - [Summary Reporter](#summary-reporter)
 - [Known issues](#known-issues)
 
@@ -120,6 +121,7 @@ const defaultOptions: Options = {
   consoleLevels: ["error", "warn", "info", "debug", "log"],
   filters: [],
   groups: [],
+  onlyFailingTestSuites: false,
   afterEachTest: {
     enable: true,
     reportType: "summary",
@@ -361,6 +363,17 @@ const useGithubActions = process.env.IS_CI;
 module.exports = {
   // ...
   reporters: [["jest-console-group-reporter", { useGithubActions }]],
+};
+```
+
+### onlyFailingTestSuites
+
+This reporter shows console messages for all tests by default. Use the `onlyFailingTestSuites` option to see messages only for failing test suites. Due to Jest's limitations, messages can't be filtered for individual failing tests, only for the entire failing suites.
+
+```ts
+module.exports = {
+  // ...
+  reporters: [["jest-console-group-reporter", { onlyFailingTestSuites: true }]],
 };
 ```
 
