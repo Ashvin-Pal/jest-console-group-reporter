@@ -65,7 +65,9 @@ export class JestConsoleGroupReporter extends DefaultReporter {
     config: Config.ProjectConfig,
     testResult: TestResult
   ): void {
-    if (this.options.onlyFailingTestSuites && testResult.numFailingTests === 0) {
+    const noFailuresOrErrors = testResult.numFailingTests === 0 && !testResult.testExecError;
+
+    if (this.options.onlyFailingTestSuites && noFailuresOrErrors) {
       super.printTestFileHeader(testPath, config, this.stripConsoleMessagesFromResults(testResult));
       return;
     }
