@@ -7,6 +7,7 @@ describe("initializeOptions", () => {
     consoleLevels: ["error", "warn", "info", "debug", "log"],
     filters: [],
     groups: [],
+    onlyFailingTestSuites: false,
     afterEachTest: {
       reportType: "summary",
       enable: true,
@@ -53,6 +54,7 @@ describe("initializeOptions", () => {
 
   test("Should merge partial custom options with default options", () => {
     const customOptions = {
+      onlyFailingTestSuites: true,
       afterEachTest: {
         reportType: "detailed",
       },
@@ -60,6 +62,7 @@ describe("initializeOptions", () => {
 
     const expected = {
       ...defaultOptions,
+      onlyFailingTestSuites: true,
       afterEachTest: {
         ...defaultOptions.afterEachTest,
         reportType: "detailed",

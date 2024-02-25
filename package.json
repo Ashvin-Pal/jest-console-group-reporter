@@ -22,6 +22,7 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "test": "jest --colors",
+    "test:watch": "jest --watch --colors",
     "test:coverage": "jest --coverage",
     "build": "tsup",
     "type-check": "tsc --noEmit",
