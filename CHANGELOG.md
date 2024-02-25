@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 1.1.1
+
+### Patch Changes
+
+- aa7b22a: fix: only failing test not catching test execution errors
+
 ## 1.1.0
 
 ### Minor Changes
