@@ -1,5 +1,11 @@
 # jest-console-group-reporter
 
+## 1.1.0
+
+### Minor Changes
+
+- ba327bd: Add a new configuration option "onlyFailingTestSuites" to allow users to display console messages from only the failing test suites.
+
 ## 1.0.1
 
 ### Patch Changes
