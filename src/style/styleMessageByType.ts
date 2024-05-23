@@ -1,5 +1,6 @@
 import type { ColorTypes } from "@/types";
 import { getColorFunctionByType } from "./getColorFunctionByType";
+import chalk from "chalk";
 
 interface ColorMessageByConsoleType {
   type: ColorTypes;
@@ -15,7 +16,8 @@ export function styleMessageByType({
   const colorFn = getColorFunctionByType(type);
 
   if (bold) {
-    return colorFn.bold(message);
+    // return colorFn.bold(message);
+    return chalk.bold(colorFn(message));
   }
   return colorFn(message);
 }

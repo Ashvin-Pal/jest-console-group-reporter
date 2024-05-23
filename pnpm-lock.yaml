@@ -55,6 +55,9 @@ devDependencies:
   jest:
     specifier: '>=25.1.0'
     version: 29.7.0(@types/node@20.10.1)(ts-node@10.9.2)
+  jest-console-group-reporter:
+    specifier: ^0.18.0
+    version: 0.18.0(@jest/reporters@29.7.0)(jest-message-util@29.7.0)
   prettier:
     specifier: ^3.1.0
     version: 3.1.0
@@ -3508,6 +3511,18 @@ packages:
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
+    dev: true
+
+  /jest-console-group-reporter@0.18.0(@jest/reporters@29.7.0)(jest-message-util@29.7.0):
+    resolution: {integrity: sha512-LK/wq/oLXQZA5CzVKQS4vN2/09hOz4thWqbCw8xp6gsfuIh5r63x/hrROrCfXvsPFtZtLI4Vfr7sjybXrfaNUg==}
+    requiresBuild: true
+    peerDependencies:
+      '@jest/reporters': '>=25.1.0'
+      jest-message-util: '>=25.1.0'
+    dependencies:
+      '@jest/reporters': 29.7.0
+      chalk: 4.1.2
+      jest-message-util: 29.7.0
     dev: true
 
   /jest-diff@29.7.0:
